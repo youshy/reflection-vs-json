@@ -3,11 +3,32 @@ package main
 import (
 	"encoding/json"
 	"reflect"
+	"time"
 )
 
 type Test struct {
 	String string `json:"this-is-string-field"`
 	Number int    `json:"this-is-number-field"`
+}
+
+type BigTest struct {
+	Title     string    `fake:"{sentence:5}"`
+	FirstName string    `fake:"{firstname}"`
+	LastName  string    `fake:"{lastname}"`
+	Date      time.Time `fake:"{date}"`
+	NIP       int
+	Sentence1 string `fake:"{sentence:100}"`
+	Sentence2 string `fake:"{sentence:100}"`
+	Sentence3 string `fake:"{sentence:100}"`
+	Sentence4 string `fake:"{sentence:100}"`
+	Sentence5 string `fake:"{sentence:100}"`
+	Sentence6 string `fake:"{sentence:100}"`
+	Sentence7 string `fake:"{sentence:100}"`
+	Sentence8 string `fake:"{sentence:100}"`
+}
+
+type NestedTest struct {
+	Books []BigTest `fakesize:"1000"`
 }
 
 func main() {

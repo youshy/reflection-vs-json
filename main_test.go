@@ -4,8 +4,41 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/brianvoe/gofakeit/v6"
 	"github.com/go-playground/assert/v2"
 )
+
+func BenchmarkBig(b *testing.B) {
+	var (
+		bigTest    BigTest
+		nestedTest NestedTest
+	)
+	gofakeit.Struct(&bigTest)
+	gofakeit.Struct(&nestedTest)
+	b.Run("StructToMap", func(b *testing.B) {
+		_ = structToMap(bigTest)
+	})
+
+	b.Run("JsonToMap", func(b *testing.B) {
+		_ = jsonToMap(bigTest)
+	})
+}
+
+func BenchmarkNested(b *testing.B) {
+	var (
+		bigTest    BigTest
+		nestedTest NestedTest
+	)
+	gofakeit.Struct(&bigTest)
+	gofakeit.Struct(&nestedTest)
+	b.Run("StructToMap", func(b *testing.B) {
+		_ = structToMap(nestedTest)
+	})
+
+	b.Run("JsonToMap", func(b *testing.B) {
+		_ = jsonToMap(nestedTest)
+	})
+}
 
 func BenchmarkStructToMap(b *testing.B) {
 	t := Test{
